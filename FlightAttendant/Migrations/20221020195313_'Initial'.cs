@@ -4,7 +4,7 @@
 
 namespace FlightAttendant.Migrations
 {
-    public partial class Initialmigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,10 +49,16 @@ namespace FlightAttendant.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Month = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<int>(type: "int", nullable: false),
+                    Hour = table.Column<int>(type: "int", nullable: false),
+                    Minutes = table.Column<int>(type: "int", nullable: false),
                     Gate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Seats = table.Column<int>(type: "int", nullable: false),
-                    AirlineId = table.Column<int>(type: "int", nullable: false)
+                    AirlineId = table.Column<int>(type: "int", nullable: false),
+                    AirportId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

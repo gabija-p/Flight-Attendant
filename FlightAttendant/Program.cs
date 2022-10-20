@@ -7,6 +7,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<FlightsDbContext>();
 builder.Services.AddTransient<IAirportsRepository, AirportsRepository>();
+builder.Services.AddTransient<IAirlinesRepository, AirlinesRepository>();
+builder.Services.AddTransient<IFlightsRepository, FlightsRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -17,7 +19,6 @@ app.UseRouting();
 app.MapControllers();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.

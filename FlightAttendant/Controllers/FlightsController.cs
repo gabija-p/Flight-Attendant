@@ -1,6 +1,8 @@
-﻿using FlightAttendant.Data.Dtos.Flights;
+﻿using FlightAttendant.Auth.Model;
+using FlightAttendant.Data.Dtos.Flights;
 using FlightAttendant.Data.Entities;
 using FlightAttendant.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightAttendant.Controllers 
@@ -12,12 +14,15 @@ namespace FlightAttendant.Controllers
         private readonly IAirportsRepository _airportsRepository;
         private readonly IAirlinesRepository _airlinesRepository;
         private readonly IFlightsRepository _flightsRepository;
+        private readonly IAuthorizationService _authorizationService;
 
-        public FlightsController(IAirportsRepository airportsRepository, IAirlinesRepository airlinesRepository, IFlightsRepository flightsRepository)
+        public FlightsController(IAirportsRepository airportsRepository, IAirlinesRepository airlinesRepository, IFlightsRepository flightsRepository,
+            IAuthorizationService authorizationService)
         {
             _airportsRepository = airportsRepository;
             _airlinesRepository = airlinesRepository;
             _flightsRepository = flightsRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -47,6 +52,13 @@ namespace FlightAttendant.Controllers
             if (airport == null)
             {
                 return NotFound($"Couldn't find an airport with id of {airportId}");
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
             }
 
             var airline = await _airlinesRepository.GetOneAsync(airlineId, airportId);
@@ -83,6 +95,13 @@ namespace FlightAttendant.Controllers
                 return NotFound($"Couldn't find an airport with id of {airportId}");
             }
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
+            }
+
             var airline = await _airlinesRepository.GetOneAsync(airlineId, airportId);
             if (airline == null)
             {
@@ -114,6 +133,13 @@ namespace FlightAttendant.Controllers
             if (airport == null)
             {
                 return NotFound($"Couldn't find an airport with id of {airportId}");
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
             }
 
             var airline = await _airlinesRepository.GetOneAsync(airlineId, airportId);

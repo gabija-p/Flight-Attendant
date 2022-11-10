@@ -1,4 +1,6 @@
-﻿namespace FlightAttendant.Data.Entities
+﻿using FlightAttendant.Auth.Model;
+
+namespace FlightAttendant.Data.Entities
 {
     public class Airline
     {

@@ -1,6 +1,8 @@
-﻿using FlightAttendant.Data.Dtos.Airlines;
+﻿using FlightAttendant.Auth.Model;
+using FlightAttendant.Data.Dtos.Airlines;
 using FlightAttendant.Data.Entities;
 using FlightAttendant.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 
@@ -12,10 +14,12 @@ namespace FlightAttendant.Controllers
     {
         private readonly IAirportsRepository _airportsRepository;
         private readonly IAirlinesRepository _airlinesRepository;
-        public AirlinesController(IAirportsRepository airportsRepository, IAirlinesRepository airlinesRepository)
+        private readonly IAuthorizationService _authorizationService;
+        public AirlinesController(IAirportsRepository airportsRepository, IAirlinesRepository airlinesRepository, IAuthorizationService authorizationService)
         {
             _airportsRepository = airportsRepository;
             _airlinesRepository = airlinesRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -47,6 +51,13 @@ namespace FlightAttendant.Controllers
                 return NotFound($"Couldn't find an airport with id of {airportId}");
             }
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
+            }
+
             var airline = new Airline();
             airline.Name = createAirlineDto.Name;
             airline.AirportId = airportId;
@@ -65,6 +76,13 @@ namespace FlightAttendant.Controllers
                 return NotFound($"Couldn't find an airport with id of {airportId}");
             }
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
+            }
+
             var airline = await _airlinesRepository.GetOneAsync(airlineId, airportId);
             if (airline == null)
             {
@@ -72,6 +90,7 @@ namespace FlightAttendant.Controllers
             }
 
             airline.Name = updateAirlineDto.Name;
+            await _airportsRepository.UpdateAsync(airport);
 
             return Ok(new AirlineDto(airline.Id, airline.Name));
         }
@@ -84,6 +103,13 @@ namespace FlightAttendant.Controllers
             if (airport == null)
             {
                 return NotFound($"Couldn't find an airport with id of {airportId}");
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, airport, PolicyNames.ResourceOwner);
+
+            if (!authorizationResult.Succeeded)
+            {
+                return NotFound("");
             }
 
             var airline = await _airlinesRepository.GetOneAsync(airlineId, airportId);

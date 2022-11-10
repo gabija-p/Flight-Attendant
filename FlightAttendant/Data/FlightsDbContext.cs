@@ -1,9 +1,11 @@
 ﻿using FlightAttendant.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using FlightAttendant.Auth.Model;
 
 namespace FlightAttendant.Data
 {
-    public class FlightsDbContext : DbContext
+    public class FlightsDbContext : IdentityDbContext<FlightAttendantUser>
     {
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Airline> Airlines { get; set; }

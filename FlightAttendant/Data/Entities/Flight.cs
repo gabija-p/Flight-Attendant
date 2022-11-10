@@ -1,4 +1,6 @@
-﻿namespace FlightAttendant.Data.Entities
+﻿using FlightAttendant.Auth.Model;
+
+namespace FlightAttendant.Data.Entities
 {
     public class Flight
     {
@@ -15,5 +17,6 @@
         public int AirlineId { get; set; }
         public Airline Airline { get; set; }
         public int AirportId { get; set; }
+
     }
 }

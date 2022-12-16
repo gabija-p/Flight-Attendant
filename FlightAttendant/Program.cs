@@ -71,11 +71,11 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 
-/*using var scope = app.Services.CreateScope();
+using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<FlightsDbContext>();
 dbContext.Database.Migrate();
 
 var dbSeeder = app.Services.CreateScope().ServiceProvider.GetRequiredService<AuthDbSeeder>();
-await dbSeeder.SeedAsync();*/
+await dbSeeder.SeedAsync();
 
 app.Run();

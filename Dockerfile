@@ -4,11 +4,11 @@ WORKDIR /FlightAttendant
 
 # copy csproj and restore as distinct layers
 COPY FlightAttendant/*.csproj .
-RUN dotnet restore -r linux-musl-arm64 /p:PublishReadyToRun=true
+RUN dotnet restore -r linux-musl-x64 /p:PublishReadyToRun=true
 
 # copy everything else and build app
 COPY FlightAttendant/. .
-RUN dotnet publish -c Release -o /app -r linux-musl-arm64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
+RUN dotnet publish -c Release -o /app -r linux-musl-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-alpine-amd64

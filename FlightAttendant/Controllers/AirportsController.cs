@@ -40,7 +40,7 @@ namespace FlightAttendant.Controllers
                 return NotFound($"Couldn't find am airport with id of {airportId}");
             }
 
-            return new AirportDto(airport.Id, airport.Name, airport.Location);
+            return new AirportDto(airport.Id, airport.Name, airport.Location, airport.UserId);
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace FlightAttendant.Controllers
 
 
             //201
-            return Created($"/api/airports/{airport.Id}/", new AirportDto(airport.Id, airport.Name, airport.Location));
+            return Created($"/api/airports/{airport.Id}/", new AirportDto(airport.Id, airport.Name, airport.Location, airport.UserId));
             //return CreatedAtAction("GetAirport", new { airportId = airport.Id }, new AirportDto(airport.Id, airport.Name, airport.Location));
         }
 
@@ -80,7 +80,7 @@ namespace FlightAttendant.Controllers
             airport.Location = updateAirportDto.Location;
             await _airportsRepository.UpdateAsync(airport);
 
-            return Ok(new AirportDto(airport.Id, airport.Name, airport.Location));
+            return Ok(new AirportDto(airport.Id, airport.Name, airport.Location, airport.UserId));
         }
 
         [HttpDelete]

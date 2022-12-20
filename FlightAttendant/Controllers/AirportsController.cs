@@ -25,7 +25,7 @@ namespace FlightAttendant.Controllers
         public async Task<IEnumerable<AirportDto>> GetMany()
         {
             var airports = await _airportsRepository.GetManyAsync();
-            return airports.Select(o => new AirportDto(o.Id, o.Name, o.Location));
+            return airports.Select(o => new AirportDto(o.Id, o.Name, o.Location, o.UserId));
         }
 
         [HttpGet]

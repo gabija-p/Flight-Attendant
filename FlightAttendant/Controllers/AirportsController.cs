@@ -44,7 +44,7 @@ namespace FlightAttendant.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = FlightAttendantRoles.AttendantUser)]
+        [Authorize]
         public async Task<ActionResult<AirportDto>> Create(CreateAirportDto createAirportDto)
         {
             var airport = new Airport {Name = createAirportDto.Name, Location = createAirportDto.Location, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub)};

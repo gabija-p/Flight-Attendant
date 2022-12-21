@@ -58,7 +58,7 @@ namespace FlightAttendant.Controllers
 
         [HttpPut]
         [Route("{airportId}")]
-        [Authorize(Roles = FlightAttendantRoles.AttendantUser)]
+        [Authorize]
         public async Task<ActionResult<AirportDto>> Update(int airportId, UpdateAirportDto updateAirportDto)
         {
             var airport = await _airportsRepository.GetOneAsync(airportId);
@@ -85,7 +85,7 @@ namespace FlightAttendant.Controllers
 
         [HttpDelete]
         [Route("{airportId}")]
-        [Authorize(Roles = FlightAttendantRoles.AttendantUser)]
+        [Authorize]
         public async Task<ActionResult> Remove(int airportId)
         {
             var airport = await _airportsRepository.GetOneAsync(airportId);

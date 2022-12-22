@@ -16,3 +16,35 @@ Sistemos sudedamosios dalys:
 •	Serverio pusė (angl. Back-End) – naudojant .NET. Duomenų bazė – MySQL.
 
 Sistemos talpinimui yra naudojamas Azure serveris. Kiekviena sistemos dalis yra diegiama tame pačiame serveryje. Internetinė aplikacija yra pasiekiama per HTTPS protokolą. Šios sistemos veikimui (pvz., duomenų manipuliavimui su duomenų baze) yra reikalingas Flight Attendant API. Jis vykdo duomenų mainus su duomenų baze - tam naudojama ORM sąsaja.
+
+# API specifikacija
+
+  # Registracija ir prisijungimas:
+    
+    POST {{server_url}}/login
+    POST {{server_url}}/register
+    
+  # Oro uostai:
+    
+    GET {{server_url}}/airports
+    GET {{server_url}}/airports/:id
+    POST {{server_url}}/airports
+    PUT {{server_url}}/airports/:id
+    DELETE {{server_url}}/airports/:id
+  
+  # Oro linijos:
+    
+    GET {{server_url}}/airports/:id/airlines
+    GET {{server_url}}/airports/:id/airlines/:airline_id
+    POST {{server_url}}/airports/:id/airlines
+    PUT {{server_url}}/airports/:id/airlines/:airline_id
+    DELETE {{server_url}}/airports/:id/airlines/:airline_id
+    
+  # Skrydžiai:
+  
+    GET {{server_url}}/airports/:id/airlines/flights
+    GET {{server_url}}/airports/:id/airlines/:airline_id/flights/:flight_id
+    POST {{server_url}}/airports/:id/airlines/flights
+    PUT {{server_url}}/airports/:id/airlines/:airline_id/flights/:flight_id
+    DELETE {{server_url}}/airports/:id/airlines/:airline_id/:flight_id
+    

@@ -48,3 +48,5 @@ Sistemos talpinimui yra naudojamas Azure serveris. Kiekviena sistemos dalis yra 
     PUT {{server_url}}/airports/:id/airlines/:airline_id/flights/:flight_id
     DELETE {{server_url}}/airports/:id/airlines/:airline_id/:flight_id
     
+  # Naudotojo sąsajos projektas: https://miro.com/app/board/uXjVP3OcHxs=/?share_link_id=720284269182
+    
